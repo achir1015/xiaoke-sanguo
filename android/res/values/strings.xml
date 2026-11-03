@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">小柯三國志</string>
+    <style name="AppTheme" parent="android:Theme.Material.NoActionBar">
+        <item name="android:colorPrimary">#1A120A</item>
+        <item name="android:colorPrimaryDark">#0F0B07</item>
+        <item name="android:colorAccent">#D8B45A</item>
+        <item name="android:statusBarColor">#0F0B07</item>
+        <item name="android:navigationBarColor">#0F0B07</item>
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+</resources>

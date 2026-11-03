@@ -282,3 +282,34 @@ small { color: var(--muted); font-weight: 400; }
 ::-webkit-scrollbar { width: 8px; height: 8px; } ::-webkit-scrollbar-thumb { background: #4a3a24; border-radius: 4px; } ::-webkit-scrollbar-track { background: transparent; }
 
 .boot-msg { color: var(--gold2); margin: -8px 0 12px; animation: glow 1.6s infinite; }
+
+/* 矮螢幕（手機橫放約 1055×507）：首頁、紀錄、戰鬥畫面緊湊一點 */
+@media (max-height: 620px) {
+  #topbar { height: 46px; }
+  .home-card { padding: 10px 22px 8px; }
+  .home-logo { width: 58px; height: 58px; border-radius: 14px; }
+  .home-card h1 { font-size: 30px; margin-top: 2px; }
+  .home-card .sub { margin: 2px 0 8px; }
+  .home-btns { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .home-btns button.big { font-size: 15px; padding: 8px 6px; }
+  .home-profile { margin-top: 8px; }
+  .home-profile img { width: 30px; height: 38px; }
+  .credit { margin-top: 6px; }
+  #setup { padding-top: 52px; }
+  .setup-head, .setup-foot { padding: 7px 14px; }
+  #leftPanel, .city-panel { top: 52px; bottom: 62px; }
+  .bottom-bar { height: 46px; bottom: 8px; }
+  .log-box { bottom: 62px; max-height: 78px; font-size: 12.5px; }
+  .fcard img { width: 30px; height: 38px; }
+  .adv-head img { width: 42px; height: 52px; }
+  .bhud { top: 52px; grid-template-columns: 1fr 200px 1fr; }
+  .bofs img { width: 34px; height: 42px; }
+  .bside .bt { font-size: 16px; }
+  .btactics button { min-width: 92px; padding: 6px 8px; font-size: 16px; }
+  .btactics button small { display: none; }
+  .badvice { font-size: 13px; padding: 4px 10px; }
+  .badvice img { width: 26px; height: 32px; }
+  .duel-hud { top: 160px; }
+  .duel-p img { width: 48px; height: 60px; }
+  .bresult { font-size: 42px; }
+}

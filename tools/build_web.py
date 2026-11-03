@@ -23,7 +23,10 @@ HEAD_INJECT = """<script>
 window.XK_WEB = { pyodide: 'vendor/pyodide/', py: 'py/' };
 (function () {
   var w = Math.min(screen.width, screen.height) < 700 ? Math.max(screen.width, screen.height) : screen.width;
-  if (w < 1100) document.querySelector('meta[name=viewport]').setAttribute('content', 'width=1100, viewport-fit=cover');
+  if (w < 1100) {
+    var k = (w / 1100).toFixed(4);
+    document.querySelector('meta[name=viewport]').setAttribute('content', 'width=1100, initial-scale=' + k + ', minimum-scale=' + k + ', maximum-scale=' + k + ', user-scalable=no, viewport-fit=cover');
+  }
 })();
 </script>
 """
