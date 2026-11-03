@@ -541,12 +541,12 @@ class SelfTest:
     def run(self):
         report = {'ok': False, 'version': APP_VERSION, 'steps': []}
         try:
-            for _ in range(80):
+            for _ in range(240):   # Intel Mac 較慢：最多等 2 分鐘
                 if self.window.evaluate_js('!!(window.__xk && window.__xk.stat && window.__xk.music && window.__xk.music.tracks.length)'):
                     break
                 time.sleep(0.5)
             # 自我測試不出聲：停掉背景音樂與語音
-            self.window.evaluate_js("window.__xk.music.audio.muted = true; window.__xk.music.audio.pause(); speechSynthesis.cancel()")
+            self.window.evaluate_js("if (window.__xk && window.__xk.music) { window.__xk.music.audio.muted = true; window.__xk.music.audio.pause(); } speechSynthesis.cancel()")
             self.window.evaluate_js(f"window.__selftest = null; {self.JS}.then((x) => window.__selftest = x)")
             for _ in range(120):
                 res = self.window.evaluate_js('window.__selftest')
