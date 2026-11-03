@@ -213,7 +213,7 @@ class Updater:
                 req = urllib.request.Request(self.LATEST, method='HEAD', headers={'User-Agent': 'XiaokeSanguo/' + APP_VERSION})
                 with urllib.request.urlopen(req, timeout=15) as r:
                     tag = r.geturl().rstrip('/').rsplit('/', 1)[-1].lstrip('vV')
-                fn = f'XiaokeSanguo-{MAC_ARCH}-{tag}.dmg' if IS_MAC else f'XiaokeSanguo-Setup-{tag}.exe'
+                fn = f'XiaokeSanguo-mac-{MAC_ARCH}-{tag}.dmg' if IS_MAC else f'XiaokeSanguo-Setup-{tag}.exe'
                 return {'status': 'ok', 'current': APP_VERSION, 'latest': tag, 'notes': '', 'date': '',
                         'url': f'{self.DOWNLOAD_PREFIX}v{tag}/{fn}', 'page': self.LATEST}
             except Exception:
