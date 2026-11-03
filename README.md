@@ -1,4 +1,4 @@
-# 小柯機器人三國志遊戲
+# 小柯機器人三國志遊戲 https://achir1015.github.io/xiaoke-sanguo/
 <img width="1106" height="460" alt="image" src="https://github.com/user-attachments/assets/789837cc-14b4-4277-8f17-a4baaf684259" />
 <img width="936" height="432" alt="image" src="https://github.com/user-attachments/assets/c50a4e53-22ed-4f54-9434-4ef2e6078dc8" />
 
