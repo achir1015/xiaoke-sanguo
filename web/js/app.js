@@ -1,6 +1,6 @@
 // 小柯機器人三國志：主程式（畫面切換、開局設定、遊戲流程、戰鬥畫面、AI 軍師、遠端對戰）
 import { $, $$, h, toast, modal, sleep } from './util.js';
-import { engine, host } from './bridge.js';
+import { engine, host, engineStatus } from './bridge.js';
 import { MapView } from './map3d.js';
 import { BattleView } from './battle3d.js';
 import { MusicPlayer } from './music.js';
@@ -29,7 +29,14 @@ window.__xk = S;
 
 // ---------------- 開機 ----------------
 async function boot() {
+  const msg = $('#bootMsg');
+  engineStatus.onProgress = (t) => { msg.textContent = t; msg.classList.toggle('hidden', !t); };
+  if (!engineStatus.ready) engineStatus.onProgress('正在載入遊戲引擎…');
+  $$('.home-btns button').forEach((b) => { b.disabled = true; });
   const [st, sg, info] = await Promise.all([engine('static'), host('settings_get'), host('app_info')]);
+  $$('.home-btns button').forEach((b) => { b.disabled = false; });
+  msg.classList.add('hidden');
+  document.documentElement.classList.toggle('mobile', info.platform === 'android' || info.platform === 'ios');
   S.stat = st.static;
   S.info = info;
   S.hasKey = sg.has_key;
@@ -223,6 +230,7 @@ async function showUpdate(r) {
     h('p', { class: 'small' }, '按「立即更新」會自動下載並安裝，完成後重新開啟遊戲。')),
   [{ label: '稍後', value: false }, { label: '立即更新', value: true, primary: true }]);
   if (!ok) return;
+  if (r.reload) { location.reload(); return; }
   if (!r.url) { host('open_url', { url: r.page }); return; }
   await host('update_install', { url: r.url, version: r.latest });
   const bar = h('div', { class: 'bar' }, h('span', {}, '下載'), h('i', {}, h('em', { style: { width: '0%' } })), h('span', {}, '0%'));
@@ -235,6 +243,7 @@ async function showUpdate(r) {
     bar.lastChild.textContent = s.pct + '%';
     if (s.state === 'error') { clearInterval(t); back.remove(); toast('更新失敗：' + (s.message || ''), 'err'); }
     if (s.state === 'manual') { clearInterval(t); back.remove(); modal('更新', '已開啟安裝檔，請把 App 拖到「應用程式」資料夾覆蓋舊版。'); }
+    if (s.state === 'installing') { clearInterval(t); back.remove(); modal('更新', '下載完成，請在跳出的畫面按「安裝」。'); }
   }, 500);
 }
 

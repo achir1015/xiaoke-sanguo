@@ -280,3 +280,5 @@ small { color: var(--muted); font-weight: 400; }
 .over-box img { width: 120px; height: 150px; object-fit: cover; border-radius: 12px; border: 2px solid var(--gold); }
 .over-box h2 { font-size: 34px; margin: 8px 0; }
 ::-webkit-scrollbar { width: 8px; height: 8px; } ::-webkit-scrollbar-thumb { background: #4a3a24; border-radius: 4px; } ::-webkit-scrollbar-track { background: transparent; }
+
+.boot-msg { color: var(--gold2); margin: -8px 0 12px; animation: glow 1.6s infinite; }

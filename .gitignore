@@ -6,3 +6,8 @@ dist-installer/
 *.spec
 tools/_portrait_sheet.html
 .claude/
+site/
+tools/.cache/
+android/build/
+android/local.properties
+android/*.jks

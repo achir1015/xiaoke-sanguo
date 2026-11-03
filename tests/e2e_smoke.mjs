@@ -11,8 +11,10 @@ const PW = process.env.PW || 'E:/AI Agent/Claude Code/xiaoke-chess/node_modules/
 const { chromium } = await import(pathToFileURL(PW).href);
 const PORT = 48297;
 const data = fs.mkdtempSync(path.join(os.tmpdir(), 'xks-e2e-'));
-const srv = spawn('python', [path.join(ROOT, 'desktop', 'app.py'), '--serve', '--port', String(PORT), '--data-dir', data], { stdio: 'pipe' });
-await new Promise((r) => srv.stdout.once('data', r));
+// URL=網址：測網頁版（已啟動的靜態伺服器）；沒給就啟動桌面版伺服器
+const URL0 = process.env.URL;
+const srv = URL0 ? null : spawn('python', [path.join(ROOT, 'desktop', 'app.py'), '--serve', '--port', String(PORT), '--data-dir', data], { stdio: 'pipe' });
+if (srv) await new Promise((r) => srv.stdout.once('data', r));
 
 const results = [];
 const check = async (name, fn) => {
@@ -27,8 +29,8 @@ const ev = (fn, arg) => page.evaluate(fn, arg);
 const wait = (ms) => page.waitForTimeout(ms);
 
 try {
-  await page.goto(`http://127.0.0.1:${PORT}/index.html`);
-  await check('首頁載入', async () => { for (let i = 0; i < 40; i++) { if (await ev(() => !!(window.__xk && __xk.stat && __xk.map))) return '38 城'; await wait(250); } throw new Error('逾時'); });
+  await page.goto(URL0 || `http://127.0.0.1:${PORT}/index.html`);
+  await check('首頁載入', async () => { for (let i = 0; i < 240; i++) { if (await ev(() => !!(window.__xk && __xk.stat && __xk.map))) return '38 城'; await wait(250); } throw new Error('逾時'); });
   await check('背景音樂 20 首', async () => {
     let n = 0;
     for (let i = 0; i < 40 && n < 20; i++) { await wait(250); n = await ev(() => __xk.music.tracks.length); }
@@ -90,7 +92,7 @@ try {
   await check('存檔', async () => {
     await page.click('#gSave'); await wait(200);
     await page.click('.modal-back button.primary'); await wait(600);
-    const r = await ev(async () => (await (await fetch('/api/host', { method: 'POST', body: JSON.stringify({ method: 'save_list' }) })).json()).saves.length);
+    const r = await ev(async () => (await (await import('./js/bridge.js')).host('save_list')).saves.length);
     if (r !== 1) throw new Error(r);
     return r;
   });
@@ -112,7 +114,7 @@ try {
   await check('沒有程式錯誤', async () => { if (errors.length) throw new Error(errors.slice(0, 3).join(' | ')); return 0; });
 } finally {
   await browser.close();
-  srv.kill();
+  if (srv) srv.kill();
   fs.rmSync(data, { recursive: true, force: true });
 }
 const bad = results.filter((r) => !r[0]).length;
