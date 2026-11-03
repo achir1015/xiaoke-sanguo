@@ -22,7 +22,8 @@ REPO = 'achir1015/xiaoke-sanguo'
 HEAD_INJECT = """<script>
 window.XK_WEB = { pyodide: 'vendor/pyodide/', py: 'py/' };
 (function () {
-  var w = Math.min(screen.width, screen.height) < 700 ? Math.max(screen.width, screen.height) : screen.width;
+  // 用網頁實際可用的寬度（扣掉 iPhone 瀏海的安全區域），不是整個螢幕寬
+  var w = window.innerWidth || document.documentElement.clientWidth || screen.width;
   if (w < 1100) {
     var k = (w / 1100).toFixed(4);
     document.querySelector('meta[name=viewport]').setAttribute('content', 'width=1100, initial-scale=' + k + ', minimum-scale=' + k + ', maximum-scale=' + k + ', user-scalable=no, viewport-fit=cover');
@@ -95,6 +96,7 @@ footer{margin-top:24px;color:#b3a585;font-size:13px}
 <a class="card" href="https://github.com/__REPO__/releases/latest/download/XiaokeSanguo-mac-AppleSilicon-__VER__.dmg"><b>Mac（Apple 晶片）</b><span>M1／M2／M3／M4</span></a>
 <a class="card" href="https://github.com/__REPO__/releases/latest/download/XiaokeSanguo-mac-Intel-__VER__.dmg"><b>Mac（Intel）</b><span>Intel 處理器的 Mac</span></a>
 <a class="card" href="https://github.com/__REPO__/releases/latest/download/XiaokeSanguo-__VER__-android.apk"><b>Android 手機／平板</b><span>下載 APK 安裝（橫放遊玩）</span></a>
+<a class="card" href="ios/"><b>iPhone／iPad</b><span>用 Safari 開啟後點選安裝（限已登記的裝置）</span></a>
 <a class="card" href="https://github.com/__REPO__/releases/latest"><b>所有版本</b><span>GitHub Releases 下載頁</span></a>
 </div>
 <ul>

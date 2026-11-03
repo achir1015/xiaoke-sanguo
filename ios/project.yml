@@ -1,0 +1,60 @@
+name: XiaokeSanguo
+options:
+  bundleIdPrefix: com.achir
+  deploymentTarget:
+    iOS: "17.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  XiaokeSanguo:
+    type: application
+    platform: iOS
+    sources:
+      - path: XiaokeSanguo
+      - path: web            # 和 Android 版、線上版同一份網頁（sync.sh 用 tools/build_web.py 產生），整個資料夾放進 App
+        type: folder
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.achir.xiaokesanguo
+        TARGETED_DEVICE_FAMILY: "1,2"     # iPhone 與 iPad（含 iPad Pro）
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 7BN6XJ59KP      # Apple Developer Program（個人）；換帳號就改這裡
+        GENERATE_INFOPLIST_FILE: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    info:
+      path: XiaokeSanguo/Info.plist
+      properties:
+        CFBundleDisplayName: 小柯三國志
+        CFBundleDevelopmentRegion: zh_TW
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        ITSAppUsesNonExemptEncryption: false
+        UILaunchScreen:
+          UIColorName: ""
+        UIStatusBarHidden: true
+        UIViewControllerBasedStatusBarAppearance: false
+        UIUserInterfaceStyle: Dark
+        UIRequiresFullScreen: true
+        # iPhone、iPad 都橫放（三國沙盤地圖是橫的）
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        NSMicrophoneUsageDescription: 與遠端玩家語音通話需要使用麥克風。
+        UIFileSharingEnabled: true
+schemes:
+  XiaokeSanguo:
+    build:
+      targets:
+        XiaokeSanguo: all
+    run:
+      config: Debug
+    archive:
+      config: Release

@@ -119,6 +119,13 @@ const H = {
     if (A && A.checkUpdate) {
       try { const r = JSON.parse(A.checkUpdate()); return { status: r.ok === false ? 'error' : 'ok', ...r }; } catch (e) { return { status: 'error', message: String(e) }; }
     }
+    // iPhone／iPad App：比對線上版的版本號，有新版就打開安裝頁重新安裝（存檔與設定會保留）
+    if (window.XiaokeIOS) {
+      try {
+        const v = await (await fetch('https://achir1015.github.io/xiaoke-sanguo/online/version.json?t=' + Date.now(), { cache: 'no-store' })).json();
+        return { status: 'ok', current: version, latest: v.version, notes: v.notes || '', url: '', page: 'https://achir1015.github.io/xiaoke-sanguo/ios/' };
+      } catch (e) { return { status: 'error', message: String(e.message || e) }; }
+    }
     // 網頁版：比對伺服器上的 version.json，新版只要重新整理
     try {
       const v = await (await fetch('version.json?t=' + Date.now(), { cache: 'no-store' })).json();
