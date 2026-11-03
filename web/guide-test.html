@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>教學測試頁</title>
+<link rel="stylesheet" href="css/guide.css">
+<style>
+  html, body { margin: 0; height: 100%; background: #14100b; color: #f3e6c8; font-family: "Microsoft JhengHei", sans-serif; }
+  .wrap { height: 100%; display: grid; place-items: center; text-align: center; }
+  h1 { font-family: "DFKai-SB", "BiauKai", serif; color: #f1d68a; letter-spacing: 4px; }
+  button { font: inherit; font-size: 18px; margin: 6px; padding: 10px 22px; border-radius: 10px; cursor: pointer;
+    border: 1px solid #d8b45a; background: linear-gradient(180deg, #3b2e1c, #251c11); color: #f3e6c8; }
+  #log { margin-top: 14px; font-size: 14px; color: #b9a77e; min-height: 1.5em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <h1>小柯機器人三國志・教學測試</h1>
+    <button id="bGame">📜 遊戲教學</button>
+    <button id="bSys">⚙️ 系統說明</button>
+    <div id="log"></div>
+  </div>
+</div>
+<script type="module">
+  import { openGuide } from './js/guide.js';
+  import { narrator } from './js/tts.js';
+  window.__narrator = narrator;
+  const log = (t) => { document.getElementById('log').textContent = t; };
+  const open = (book) => { window.__guide = openGuide(book, { onClose: () => log(`已關閉「${book === 'game' ? '遊戲教學' : '系統說明'}」`) }); };
+  document.getElementById('bGame').onclick = () => open('game');
+  document.getElementById('bSys').onclick = () => open('system');
+  // 測試用：?book=game&lesson=7&step=4（從 1 起算）&mute=1
+  const qs = new URLSearchParams(location.search);
+  if (qs.get('book')) {
+    open(qs.get('book'));
+    if (qs.get('mute') && window.__guide.voiceOn) window.__guide.toggleVoice();
+    if (qs.get('lesson')) window.__guide.go(Number(qs.get('lesson')) - 1, Number(qs.get('step') || 1) - 1);
+  }
+</script>
+</body>
+</html>

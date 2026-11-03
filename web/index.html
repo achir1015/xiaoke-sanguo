@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小柯機器人三國志遊戲</title>
+<link rel="icon" href="assets/icon.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/guide.css">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.min.js","three/addons/controls/":"./vendor/"}}</script>
+<script src="vendor/peerjs.min.js"></script>
+<script type="module" src="js/app.js"></script>
+</head>
+<body>
+<div id="mapWrap"></div>
+
+<header id="topbar">
+  <div class="brand"><img src="assets/icon.png" alt=""><span>小柯機器人三國志</span></div>
+  <div id="gameDate" class="gdate"></div>
+  <div id="turnBanner" class="turn-banner"></div>
+  <div class="top-right">
+    <div id="clock" class="clock"></div>
+    <div class="vol-box" title="音效音量（往上大聲）">
+      <button id="btnSfx" class="icon-btn" title="音效">🔔</button>
+      <div class="vpop"><span id="sfxVal" class="vol-val">70</span><input id="sfxVol" class="vslider" type="range" min="0" max="100" value="70" aria-label="音效音量"></div>
+    </div>
+    <div class="vol-box" title="背景音樂音量（往上大聲）">
+      <button id="btnMusic" class="icon-btn" title="背景音樂：播放／暫停">♫</button>
+      <div class="vpop"><span id="musicVal" class="vol-val">50</span><input id="musicVol" class="vslider" type="range" min="0" max="100" value="50" aria-label="背景音樂音量"></div>
+    </div>
+    <button id="btnMusicList" class="ghost mini-music" title="背景音樂清單">♫ 背景音樂</button>
+    <button id="btnSettings" class="icon-btn" title="設定">⚙</button>
+  </div>
+</header>
+<div id="musicPanel" class="music-panel hidden"></div>
+
+<!-- 首頁 -->
+<section id="home" class="screen">
+  <div class="home-card">
+    <img class="home-logo" src="assets/icon.png" alt="">
+    <h1>小柯機器人三國志</h1>
+    <p class="sub">群雄逐鹿・3D 沙盤策略遊戲</p>
+    <div class="home-btns">
+      <button id="hNew" class="big primary">⚔ 新遊戲</button>
+      <button id="hLoad" class="big">📜 繼續遊戲</button>
+      <button id="hNet" class="big">🌐 遠端對戰</button>
+      <button id="hGuide" class="big">🎓 遊戲教學</button>
+      <button id="hHelp" class="big">📖 系統說明</button>
+      <button id="hSettings" class="big">⚙ 設定</button>
+      <button id="hUpdate" class="big">⟳ 檢查更新</button>
+      <button id="hAbout" class="big">ℹ 關於</button>
+    </div>
+    <div class="home-profile" id="homeProfile"></div>
+    <p class="credit">系統開發：吳玉柱 先生 與 Claude AI Opus 5.5　<span id="verText"></span></p>
+  </div>
+</section>
+
+<!-- 開新遊戲 -->
+<section id="setup" class="screen hidden">
+  <div class="setup-card">
+    <div class="setup-head"><h2>開新遊戲</h2><button id="sBack" class="ghost">← 回首頁</button></div>
+    <div class="setup-body">
+      <div class="setup-col">
+        <h3>① 對戰模式</h3>
+        <div id="modeBtns" class="seg wrap">
+          <button data-mode="pva" class="on">🧑 真人對 AI</button>
+          <button data-mode="ava">🤖 AI 對 AI 觀戰</button>
+          <button data-mode="net">🌐 真人對真人（遠端）</button>
+          <button data-mode="hot">👥 同機多人輪流</button>
+        </div>
+        <h3>② 劇本</h3>
+        <div id="scenBtns" class="scen-list"></div>
+        <h3>③ 勝利條件</h3>
+        <select id="limitSel">
+          <option value="0">一統天下（消滅所有勢力）</option>
+          <option value="36">3 年期限（國力最高者勝）</option>
+          <option value="60">5 年期限</option>
+          <option value="120">10 年期限</option>
+        </select>
+        <div id="netBox" class="net-box hidden"></div>
+      </div>
+      <div class="setup-col wide">
+        <h3>④ 勢力設定 <small id="seatHint"></small></h3>
+        <div id="seatList" class="seat-list"></div>
+      </div>
+    </div>
+    <div class="setup-foot">
+      <div id="setupMsg" class="setup-msg"></div>
+      <button id="sStart" class="big primary">開始遊戲 ▶</button>
+    </div>
+  </div>
+</section>
+
+<!-- 遊戲 -->
+<section id="game" class="screen hidden">
+  <aside id="leftPanel">
+    <div id="factionList" class="faction-list"></div>
+    <div id="advisorCard" class="advisor-card"></div>
+  </aside>
+  <aside id="cityPanel" class="city-panel hidden"></aside>
+  <div id="logBox" class="log-box"></div>
+  <div id="bottomBar" class="bottom-bar">
+    <button id="gHome" class="ghost" title="回首頁">⌂</button>
+    <button id="gSave" class="ghost">💾 存檔</button>
+    <button id="gSpeed" class="ghost" title="電腦行動速度">⏩ 普通</button>
+    <button id="gPause" class="ghost hidden">⏸ 暫停</button>
+    <button id="gVoice" class="ghost hidden" title="語音通話">🎤 語音</button>
+    <button id="gRanking" class="ghost">📊 國力</button>
+    <button id="gEnd" class="big primary" disabled>結束回合 ▶</button>
+  </div>
+</section>
+
+<!-- 戰鬥 -->
+<div id="battle" class="battle hidden">
+  <div id="battleCanvas" class="battle-stage"></div>
+  <div class="bhud">
+    <div class="bside att" id="bAtt"></div>
+    <div class="bcenter"><div id="bRound" class="bround"></div><div id="bWall" class="bwall"></div><div id="bMsg" class="bmsg"></div></div>
+    <div class="bside def" id="bDef"></div>
+  </div>
+  <div id="duelHud" class="duel-hud hidden"></div>
+  <div class="bbottom">
+    <div id="bAdvice" class="badvice"></div>
+    <div id="bTactics" class="btactics"></div>
+    <div id="bWait" class="bwait"></div>
+    <button id="bSkip" class="ghost bskip">⏭ 加快</button>
+  </div>
+</div>
+
+<div id="toasts"></div>
+</body>
+</html>

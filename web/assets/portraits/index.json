@@ -1,0 +1,416 @@
+{
+ "players": [
+  {
+   "id": "m01",
+   "title": "青鋒少將",
+   "gender": "男"
+  },
+  {
+   "id": "m02",
+   "title": "赤膽將軍",
+   "gender": "男"
+  },
+  {
+   "id": "m03",
+   "title": "白袍銀槍",
+   "gender": "男"
+  },
+  {
+   "id": "m04",
+   "title": "鐵甲虎賁",
+   "gender": "男"
+  },
+  {
+   "id": "m05",
+   "title": "玄甲騎都",
+   "gender": "男"
+  },
+  {
+   "id": "m06",
+   "title": "儒雅書生",
+   "gender": "男"
+  },
+  {
+   "id": "m07",
+   "title": "飛羽神射",
+   "gender": "男"
+  },
+  {
+   "id": "m08",
+   "title": "西涼猛士",
+   "gender": "男"
+  },
+  {
+   "id": "m09",
+   "title": "江東水師",
+   "gender": "男"
+  },
+  {
+   "id": "m10",
+   "title": "北地遊俠",
+   "gender": "男"
+  },
+  {
+   "id": "m11",
+   "title": "紫金太守",
+   "gender": "男"
+  },
+  {
+   "id": "m12",
+   "title": "雲中郎將",
+   "gender": "男"
+  },
+  {
+   "id": "m13",
+   "title": "刀筆文吏",
+   "gender": "男"
+  },
+  {
+   "id": "m14",
+   "title": "長髯老將",
+   "gender": "男"
+  },
+  {
+   "id": "m15",
+   "title": "虎頭力士",
+   "gender": "男"
+  },
+  {
+   "id": "m16",
+   "title": "布衣軍師",
+   "gender": "男"
+  },
+  {
+   "id": "m17",
+   "title": "黑面莽夫",
+   "gender": "男"
+  },
+  {
+   "id": "m18",
+   "title": "翩翩公子",
+   "gender": "男"
+  },
+  {
+   "id": "m19",
+   "title": "巴蜀勇士",
+   "gender": "男"
+  },
+  {
+   "id": "m20",
+   "title": "關外刀客",
+   "gender": "男"
+  },
+  {
+   "id": "f01",
+   "title": "紅纓女將",
+   "gender": "女"
+  },
+  {
+   "id": "f02",
+   "title": "月下琴師",
+   "gender": "女"
+  },
+  {
+   "id": "f03",
+   "title": "江南才女",
+   "gender": "女"
+  },
+  {
+   "id": "f04",
+   "title": "巾幗統帥",
+   "gender": "女"
+  },
+  {
+   "id": "f05",
+   "title": "飛燕弓手",
+   "gender": "女"
+  },
+  {
+   "id": "f06",
+   "title": "洛水仙子",
+   "gender": "女"
+  },
+  {
+   "id": "f07",
+   "title": "錦衣郡主",
+   "gender": "女"
+  },
+  {
+   "id": "f08",
+   "title": "劍舞佳人",
+   "gender": "女"
+  },
+  {
+   "id": "f09",
+   "title": "山中隱士",
+   "gender": "女"
+  },
+  {
+   "id": "f10",
+   "title": "百花夫人",
+   "gender": "女"
+  },
+  {
+   "id": "f11",
+   "title": "紫衣謀士",
+   "gender": "女"
+  },
+  {
+   "id": "f12",
+   "title": "銀甲先鋒",
+   "gender": "女"
+  },
+  {
+   "id": "f13",
+   "title": "雪原騎手",
+   "gender": "女"
+  },
+  {
+   "id": "f14",
+   "title": "翠竹書香",
+   "gender": "女"
+  },
+  {
+   "id": "f15",
+   "title": "鳳冠皇后",
+   "gender": "女"
+  },
+  {
+   "id": "f16",
+   "title": "蜀錦繡娘",
+   "gender": "女"
+  },
+  {
+   "id": "f17",
+   "title": "雙刀俠女",
+   "gender": "女"
+  },
+  {
+   "id": "f18",
+   "title": "鼓樂將軍",
+   "gender": "女"
+  },
+  {
+   "id": "f19",
+   "title": "素衣醫者",
+   "gender": "女"
+  },
+  {
+   "id": "f20",
+   "title": "海濱漁女",
+   "gender": "女"
+  }
+ ],
+ "advisors": [
+  {
+   "id": "adv01",
+   "name": "諸葛亮",
+   "gender": "男",
+   "style": "balance",
+   "epithet": "臥龍"
+  },
+  {
+   "id": "adv02",
+   "name": "司馬懿",
+   "gender": "男",
+   "style": "defend",
+   "epithet": "冢虎"
+  },
+  {
+   "id": "adv03",
+   "name": "郭嘉",
+   "gender": "男",
+   "style": "attack",
+   "epithet": "鬼才"
+  },
+  {
+   "id": "adv04",
+   "name": "周瑜",
+   "gender": "男",
+   "style": "attack",
+   "epithet": "美周郎"
+  },
+  {
+   "id": "adv05",
+   "name": "龐統",
+   "gender": "男",
+   "style": "scheme",
+   "epithet": "鳳雛"
+  },
+  {
+   "id": "adv06",
+   "name": "荀彧",
+   "gender": "男",
+   "style": "economy",
+   "epithet": "王佐之才"
+  },
+  {
+   "id": "adv07",
+   "name": "賈詡",
+   "gender": "男",
+   "style": "scheme",
+   "epithet": "毒士"
+  },
+  {
+   "id": "adv08",
+   "name": "魯肅",
+   "gender": "男",
+   "style": "economy",
+   "epithet": "子敬"
+  },
+  {
+   "id": "adv09",
+   "name": "陸遜",
+   "gender": "男",
+   "style": "defend",
+   "epithet": "儒將"
+  },
+  {
+   "id": "adv10",
+   "name": "徐庶",
+   "gender": "男",
+   "style": "balance",
+   "epithet": "元直"
+  },
+  {
+   "id": "adv11",
+   "name": "荀攸",
+   "gender": "男",
+   "style": "scheme",
+   "epithet": "謀主"
+  },
+  {
+   "id": "adv12",
+   "name": "法正",
+   "gender": "男",
+   "style": "attack",
+   "epithet": "孝直"
+  },
+  {
+   "id": "adv13",
+   "name": "陳宮",
+   "gender": "男",
+   "style": "scheme",
+   "epithet": "公台"
+  },
+  {
+   "id": "adv14",
+   "name": "田豐",
+   "gender": "男",
+   "style": "defend",
+   "epithet": "元皓"
+  },
+  {
+   "id": "adv15",
+   "name": "沮授",
+   "gender": "男",
+   "style": "balance",
+   "epithet": "監軍"
+  },
+  {
+   "id": "adv16",
+   "name": "程昱",
+   "gender": "男",
+   "style": "attack",
+   "epithet": "仲德"
+  },
+  {
+   "id": "adv17",
+   "name": "張昭",
+   "gender": "男",
+   "style": "economy",
+   "epithet": "子布"
+  },
+  {
+   "id": "adv18",
+   "name": "呂蒙",
+   "gender": "男",
+   "style": "attack",
+   "epithet": "白衣渡江"
+  },
+  {
+   "id": "adv19",
+   "name": "姜維",
+   "gender": "男",
+   "style": "attack",
+   "epithet": "麒麟兒"
+  },
+  {
+   "id": "adv20",
+   "name": "鄧艾",
+   "gender": "男",
+   "style": "scheme",
+   "epithet": "奇兵"
+  },
+  {
+   "id": "adv21",
+   "name": "黃月英",
+   "gender": "女",
+   "style": "economy",
+   "epithet": "巧思"
+  },
+  {
+   "id": "adv22",
+   "name": "蔡文姬",
+   "gender": "女",
+   "style": "balance",
+   "epithet": "才女"
+  },
+  {
+   "id": "adv23",
+   "name": "辛憲英",
+   "gender": "女",
+   "style": "defend",
+   "epithet": "明鑑"
+  },
+  {
+   "id": "adv24",
+   "name": "王異",
+   "gender": "女",
+   "style": "attack",
+   "epithet": "烈女"
+  },
+  {
+   "id": "adv25",
+   "name": "貂蟬",
+   "gender": "女",
+   "style": "scheme",
+   "epithet": "閉月"
+  },
+  {
+   "id": "adv26",
+   "name": "大喬",
+   "gender": "女",
+   "style": "economy",
+   "epithet": "國色"
+  },
+  {
+   "id": "adv27",
+   "name": "小喬",
+   "gender": "女",
+   "style": "balance",
+   "epithet": "江東雙璧"
+  },
+  {
+   "id": "adv28",
+   "name": "孫尚香",
+   "gender": "女",
+   "style": "attack",
+   "epithet": "弓腰姬"
+  },
+  {
+   "id": "adv29",
+   "name": "甄宓",
+   "gender": "女",
+   "style": "defend",
+   "epithet": "洛神"
+  },
+  {
+   "id": "adv30",
+   "name": "鮑三娘",
+   "gender": "女",
+   "style": "attack",
+   "epithet": "巾幗"
+  }
+ ]
+}

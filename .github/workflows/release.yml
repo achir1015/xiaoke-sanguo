@@ -1,0 +1,78 @@
+name: 建置、測試與發佈（Windows）
+
+on:
+  push:
+    branches: [main]
+    paths: ['web/**', 'sanguo/**', 'desktop/**', 'installer/**', 'tests/**', 'requirements.txt', '.github/workflows/release.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 版本號
+        id: ver
+        shell: pwsh
+        run: |
+          $v = (Get-Content web\version.json -Raw -Encoding utf8 | ConvertFrom-Json).version
+          "ver=$v" >> $env:GITHUB_OUTPUT
+
+      - name: 安裝套件
+        run: python -m pip install -r requirements.txt
+
+      - name: 引擎測試
+        run: python -m unittest discover -s tests -v
+
+      - name: PyInstaller 打包
+        run: python -m PyInstaller --noconfirm --clean --windowed --name XiaokeSanguo --icon desktop\app.ico --paths . --add-data "web;web" --hidden-import sanguo.api --collect-submodules sanguo --exclude-module numpy --exclude-module scipy --exclude-module tkinter --distpath dist --workpath build desktop\app.py
+
+      - name: 製作安裝程式
+        shell: pwsh
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress }
+          & $iscc "/DAppVer=${{ steps.ver.outputs.ver }}" installer\installer.iss
+          if ($LASTEXITCODE -ne 0) { throw "ISCC 失敗" }
+
+      - name: 靜默安裝與自我測試
+        shell: pwsh
+        run: |
+          $setup = Get-ChildItem dist-installer\*.exe | Select-Object -First 1
+          $dir = 'C:\XKTest\小柯機器人三國志遊戲'
+          Start-Process -FilePath $setup.FullName -ArgumentList "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /CURRENTUSER /DIR=`"$dir`"" -Wait
+          if (-not (Test-Path "$dir\XiaokeSanguo.exe")) { throw '安裝失敗' }
+          $p = Start-Process -FilePath "$dir\XiaokeSanguo.exe" -ArgumentList '--selftest C:\XKTest\report.json' -PassThru
+          if (-not $p.WaitForExit(300000)) { Stop-Process $p -Force }
+          if (-not (Test-Path C:\XKTest\report.json)) { throw '沒有產生自我測試報告' }
+          $r = Get-Content C:\XKTest\report.json -Raw -Encoding UTF8
+          Write-Host $r
+          if (-not ($r | ConvertFrom-Json).ok) { Write-Host "::warning title=自我測試::$($r -replace "`r?`n",' ')" }
+
+      - name: 發佈 Release（版本號沒發佈過才發）
+        if: github.ref == 'refs/heads/main'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $v = '${{ steps.ver.outputs.ver }}'
+          gh release view "v$v" 2>$null
+          if ($LASTEXITCODE -eq 0) { Write-Host "v$v 已經發佈過"; exit 0 }
+          $notes = (Get-Content web\version.json -Raw -Encoding utf8 | ConvertFrom-Json).notes
+          $body = "## 更新內容`n$notes`n`n## 下載安裝`n下載 XiaokeSanguo-Setup-$v.exe 執行即可安裝（Windows 10／11）。已安裝舊版的電腦會在遊戲內提示更新。`n`n系統開發：吳玉柱 先生 與 Claude AI Opus 5.5"
+          Set-Content -Path notes.md -Value $body -Encoding utf8
+          gh release create "v$v" (Get-ChildItem dist-installer\*.exe).FullName --title "小柯機器人三國志遊戲 v$v" --notes-file notes.md
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: XiaokeSanguo-windows
+          path: dist-installer/*.exe
