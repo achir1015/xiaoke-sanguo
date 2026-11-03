@@ -1,4 +1,8 @@
 # 小柯機器人三國志遊戲
+<img width="1106" height="460" alt="image" src="https://github.com/user-attachments/assets/789837cc-14b4-4277-8f17-a4baaf684259" />
+示範
+
+
 
 3D 沙盤三國策略遊戲。選一位君主，內政、徵兵、登用人才、出征攻城，在 3D 戰場上用戰術與單挑擊敗對手，一統天下！
 
